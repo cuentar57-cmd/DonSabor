@@ -9,18 +9,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-body{
-background:#f4f6f9;
-color:#333;
-padding-bottom:80px;
-}
+body{background:#f4f6f9;color:#333;padding-bottom:80px;}
 
 header{
 background:linear-gradient(135deg,#ff6b00,#ff3c00);
@@ -57,9 +48,7 @@ box-shadow:0 5px 15px rgba(0,0,0,0.08);
 transition:0.3s;
 }
 
-.card:hover{
-transform:translateY(-5px);
-}
+.card:hover{transform:translateY(-5px);}
 
 .price{
 font-weight:bold;
@@ -77,9 +66,7 @@ cursor:pointer;
 transition:0.3s;
 }
 
-button:hover{
-background:#ff6b00;
-}
+button:hover{background:#ff6b00;}
 
 /* BOTÓN FLOTANTE */
 .cart-btn{
@@ -130,9 +117,7 @@ z-index:999;
 overflow-y:auto;
 }
 
-.cart-panel.active{
-right:0;
-}
+.cart-panel.active{right:0;}
 
 .cart-item{
 display:flex;
@@ -142,16 +127,9 @@ margin-bottom:10px;
 font-size:14px;
 }
 
-.qty{
-display:flex;
-gap:5px;
-align-items:center;
-}
+.qty{display:flex;gap:5px;align-items:center;}
 
-.qty button{
-padding:2px 6px;
-font-size:12px;
-}
+.qty button{padding:2px 6px;font-size:12px;}
 
 .total{
 margin-top:20px;
@@ -196,16 +174,57 @@ width:100%;
 <button onclick="agregar('Pizza Muzzarella',7000)">Agregar</button>
 </div>
 
+<div class="card">
+<h3>Lomito Completo</h3>
+<div class="price">$7500</div>
+<button onclick="agregar('Lomito Completo',7500)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Empanada</h3>
+<div class="price">$1200</div>
+<button onclick="agregar('Empanada',1200)">Agregar</button>
+</div>
+
 </div>
 </section>
 
-<!-- BOTÓN FLOTANTE -->
+<section class="section">
+<h2><i class="fa-solid fa-glass-water"></i> Bebidas</h2>
+<div class="grid">
+
+<div class="card">
+<h3>Coca-Cola 2.25L</h3>
+<div class="price">$2500</div>
+<button onclick="agregar('Coca-Cola 2.25L',2500)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Sprite 2.25L</h3>
+<div class="price">$2500</div>
+<button onclick="agregar('Sprite 2.25L',2500)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Agua Mineral</h3>
+<div class="price">$1500</div>
+<button onclick="agregar('Agua Mineral',1500)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Cerveza 1L</h3>
+<div class="price">$3000</div>
+<button onclick="agregar('Cerveza 1L',3000)">Agregar</button>
+</div>
+
+</div>
+</section>
+
 <div class="cart-btn" onclick="toggleCart()">
 <i class="fa-solid fa-cart-shopping"></i>
 <div class="cart-count" id="cart-count">0</div>
 </div>
 
-<!-- PANEL -->
 <div class="cart-panel" id="cart-panel">
 <h2><i class="fa-solid fa-cart-shopping"></i> Tu Pedido</h2>
 <div id="lista"></div>
@@ -215,16 +234,18 @@ width:100%;
 </button>
 </div>
 
-<!-- SONIDO -->
-<audio id="sonidoAgregar" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
-
 <script>
 let carrito = {};
 
+// 🔊 SONIDO FUNCIONANDO 100%
+function sonidoAgregar(){
+const audio = new Audio("https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg");
+audio.play();
+}
+
 function agregar(nombre, precio){
 
-// 🔊 SONIDO
-document.getElementById("sonidoAgregar").play();
+sonidoAgregar();
 
 if(carrito[nombre]){
 carrito[nombre].cantidad++;
