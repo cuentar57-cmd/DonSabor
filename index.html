@@ -239,75 +239,80 @@ let carrito = {};
 
 // 🔊 SONIDO CAJA REGISTRADORA ARREGLADO
 function sonidoAgregar(){
-const audio = new Audio("https://actions.google.com/sounds/v1/cash_register/cash_register.ogg");
-audio.play().catch(e => {});
+    // precargamos audio solo una vez
+    if(!window.sonido){
+        window.sonido = new Audio("https://actions.google.com/sounds/v1/cash_register/cash_register.ogg");
+        window.sonido.volume = 0.5; // opcional
+    }
+    // rebobinar y reproducir
+    window.sonido.currentTime = 0;
+    window.sonido.play().catch(e => console.log("No se pudo reproducir el sonido:", e));
 }
 
 function agregar(nombre, precio){
+    sonidoAgregar();
 
-sonidoAgregar();
+    if(carrito[nombre]){
+        carrito[nombre].cantidad++;
+    }else{
+        carrito[nombre] = {precio:precio, cantidad:1};
+    }
 
-if(carrito[nombre]){
-carrito[nombre].cantidad++;
-}else{
-carrito[nombre] = {precio:precio, cantidad:1};
-}
-
-actualizarCarrito();
+    actualizarCarrito();
 }
 
 function actualizarCarrito(){
-let lista = document.getElementById("lista");
-lista.innerHTML="";
-let total = 0;
-let count = 0;
+    let lista = document.getElementById("lista");
+    lista.innerHTML="";
+    let total = 0;
+    let count = 0;
 
-for(let item in carrito){
-let datos = carrito[item];
-total += datos.precio * datos.cantidad;
-count += datos.cantidad;
+    for(let item in carrito){
+        let datos = carrito[item];
+        total += datos.precio * datos.cantidad;
+        count += datos.cantidad;
 
-lista.innerHTML += `
-<div class="cart-item">
-<span>${item}</span>
-<div class="qty">
-<button onclick="cambiarCantidad('${item}', -1)">-</button>
-<span>${datos.cantidad}</span>
-<button onclick="cambiarCantidad('${item}', 1)">+</button>
-</div>
-</div>
-`;
-}
+        lista.innerHTML += `
+        <div class="cart-item">
+            <span>${item}</span>
+            <div class="qty">
+                <button onclick="cambiarCantidad('${item}', -1)">-</button>
+                <span>${datos.cantidad}</span>
+                <button onclick="cambiarCantidad('${item}', 1)">+</button>
+            </div>
+        </div>
+        `;
+    }
 
-document.getElementById("total").innerText = total;
-document.getElementById("cart-count").innerText = count;
+    document.getElementById("total").innerText = total;
+    document.getElementById("cart-count").innerText = count;
 }
 
 function cambiarCantidad(nombre, cambio){
-carrito[nombre].cantidad += cambio;
-if(carrito[nombre].cantidad <= 0){
-delete carrito[nombre];
-}
-actualizarCarrito();
+    carrito[nombre].cantidad += cambio;
+    if(carrito[nombre].cantidad <= 0){
+        delete carrito[nombre];
+    }
+    actualizarCarrito();
 }
 
 function toggleCart(){
-document.getElementById("cart-panel").classList.toggle("active");
+    document.getElementById("cart-panel").classList.toggle("active");
 }
 
 function enviarWhatsApp(){
-let mensaje = "Hola, quiero pedir:%0A";
-let total = 0;
+    let mensaje = "Hola, quiero pedir:%0A";
+    let total = 0;
 
-for(let item in carrito){
-let datos = carrito[item];
-mensaje += `${item} x${datos.cantidad}%0A`;
-total += datos.precio * datos.cantidad;
-}
+    for(let item in carrito){
+        let datos = carrito[item];
+        mensaje += `${item} x${datos.cantidad}%0A`;
+        total += datos.precio * datos.cantidad;
+    }
 
-mensaje += `%0ATotal: $${total}`;
+    mensaje += `%0ATotal: $${total}`;
 
-window.open(`https://wa.me/5493585079522?text=${mensaje}`);
+    window.open(`https://wa.me/5493585079522?text=${mensaje}`);
 }
 </script>
 </body>
