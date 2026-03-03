@@ -237,13 +237,10 @@ width:100%;
 <script>
 let carrito = {};
 
-// 🔊 SONIDO FUNCIONANDO 100%
+// 🔊 SONIDO CAJA REGISTRADORA ARREGLADO
 function sonidoAgregar(){
-const audio = new Audio("function sonidoAgregar(){
 const audio = new Audio("https://actions.google.com/sounds/v1/cash_register/cash_register.ogg");
-audio.play();
-}");
-audio.play();
+audio.play().catch(e => {});
 }
 
 function agregar(nombre, precio){
@@ -313,6 +310,5 @@ mensaje += `%0ATotal: $${total}`;
 window.open(`https://wa.me/5493585079522?text=${mensaje}`);
 }
 </script>
-
 </body>
 </html>
