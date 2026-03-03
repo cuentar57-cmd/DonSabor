@@ -115,7 +115,7 @@ align-items:center;
 justify-content:center;
 }
 
-/* PANEL CARRITO */
+/* PANEL */
 .cart-panel{
 position:fixed;
 top:0;
@@ -164,7 +164,6 @@ margin-top:15px;
 background:#25d366;
 width:100%;
 }
-
 </style>
 </head>
 
@@ -192,34 +191,9 @@ width:100%;
 </div>
 
 <div class="card">
-<h3>Empanada</h3>
-<div class="price">$1200</div>
-<button onclick="agregar('Empanada',1200)">Agregar</button>
-</div>
-
-<div class="card">
 <h3>Pizza Muzzarella</h3>
 <div class="price">$7000</div>
 <button onclick="agregar('Pizza Muzzarella',7000)">Agregar</button>
-</div>
-
-</div>
-</section>
-
-<section class="section">
-<h2><i class="fa-solid fa-glass-water"></i> Bebidas</h2>
-<div class="grid">
-
-<div class="card">
-<h3>Coca-Cola 2.25L</h3>
-<div class="price">$2500</div>
-<button onclick="agregar('Coca-Cola 2.25L',2500)">Agregar</button>
-</div>
-
-<div class="card">
-<h3>Agua Mineral</h3>
-<div class="price">$1500</div>
-<button onclick="agregar('Agua Mineral',1500)">Agregar</button>
 </div>
 
 </div>
@@ -231,7 +205,7 @@ width:100%;
 <div class="cart-count" id="cart-count">0</div>
 </div>
 
-<!-- PANEL CARRITO -->
+<!-- PANEL -->
 <div class="cart-panel" id="cart-panel">
 <h2><i class="fa-solid fa-cart-shopping"></i> Tu Pedido</h2>
 <div id="lista"></div>
@@ -241,15 +215,23 @@ width:100%;
 </button>
 </div>
 
+<!-- SONIDO -->
+<audio id="sonidoAgregar" src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3"></audio>
+
 <script>
 let carrito = {};
 
 function agregar(nombre, precio){
+
+// 🔊 SONIDO
+document.getElementById("sonidoAgregar").play();
+
 if(carrito[nombre]){
 carrito[nombre].cantidad++;
 }else{
 carrito[nombre] = {precio:precio, cantidad:1};
 }
+
 actualizarCarrito();
 }
 
