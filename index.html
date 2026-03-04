@@ -137,6 +137,15 @@ font-weight:bold;
 font-size:18px;
 }
 
+.checkout input{
+width:100%;
+padding:8px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:14px;
+}
+
 .whatsapp{
 margin-top:15px;
 background:#25d366;
@@ -186,6 +195,42 @@ width:100%;
 <button onclick="agregar('Empanada',1200)">Agregar</button>
 </div>
 
+<div class="card">
+<h3>Milanesa Napolitana</h3>
+<div class="price">$4500</div>
+<button onclick="agregar('Milanesa Napolitana',4500)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Hamburguesa Completa</h3>
+<div class="price">$3500</div>
+<button onclick="agregar('Hamburguesa Completa',3500)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Empanadas (Docena)</h3>
+<div class="price">$6000</div>
+<button onclick="agregar('Empanadas (Docena)',6000)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Lomo Completo</h3>
+<div class="price">$5200</div>
+<button onclick="agregar('Lomo Completo',5200)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Pizza Especial</h3>
+<div class="price">$4800</div>
+<button onclick="agregar('Pizza Especial',4800)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Ravioles con Salsa</h3>
+<div class="price">$4200</div>
+<button onclick="agregar('Ravioles con Salsa',4200)">Agregar</button>
+</div>
+
 </div>
 </section>
 
@@ -225,17 +270,53 @@ width:100%;
 <div class="cart-count" id="cart-count">0</div>
 </div>
 
+
 <div class="cart-panel" id="cart-panel">
 <h2><i class="fa-solid fa-cart-shopping"></i> Tu Pedido</h2>
 <div id="lista"></div>
 <div class="total">Total: $<span id="total">0</span></div>
+
+<div class="checkout">
+<input type="text" id="nombre" placeholder="Tu nombre">
+<input type="text" id="direccion" placeholder="Dirección de entrega">
+<input type="text" id="telefono" placeholder="Teléfono">
+</div>
+
 <button class="whatsapp" onclick="enviarWhatsApp()">
 <i class="fa-brands fa-whatsapp"></i> Enviar Pedido
 </button>
-</div>
 
 <script>
 let carrito = {};
+
+function enviarWhatsApp(){
+
+    let nombre = document.getElementById("nombre").value;
+    let direccion = document.getElementById("direccion").value;
+    let telefono = document.getElementById("telefono").value;
+
+    if(nombre === "" || direccion === "" || telefono === ""){
+        alert("Por favor completá tus datos antes de enviar el pedido.");
+        return;
+    }
+
+    let mensaje = "Hola, quiero pedir:%0A";
+    let total = 0;
+
+    for(let item in carrito){
+        let datos = carrito[item];
+        mensaje += `${item} x${datos.cantidad}%0A`;
+        total += datos.precio * datos.cantidad;
+    }
+
+    mensaje += `%0A%0ADatos del cliente:%0A`;
+    mensaje += `Nombre: ${nombre}%0A`;
+    mensaje += `Dirección: ${direccion}%0A`;
+    mensaje += `Teléfono: ${telefono}%0A`;
+    mensaje += `%0ATotal: $${total}`;
+
+    window.open(`https://wa.me/5493585079522?text=${mensaje}`);
+}
 
 // 🔊 SONIDO CAJA REGISTRADORA ARREGLADO
 function sonidoAgregar(){
@@ -300,20 +381,7 @@ function toggleCart(){
     document.getElementById("cart-panel").classList.toggle("active");
 }
 
-function enviarWhatsApp(){
-    let mensaje = "Hola, quiero pedir:%0A";
-    let total = 0;
 
-    for(let item in carrito){
-        let datos = carrito[item];
-        mensaje += `${item} x${datos.cantidad}%0A`;
-        total += datos.precio * datos.cantidad;
-    }
-
-    mensaje += `%0ATotal: $${total}`;
-
-    window.open(`https://wa.me/5493585079522?text=${mensaje}`);
-}
 </script>
 </body>
 </html>
